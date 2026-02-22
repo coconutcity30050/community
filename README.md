@@ -11,7 +11,7 @@
 8. use Firebase database, user data including email, password, household, address.
 reading Firebase database and authenticate with Email/pasword, and allow admin to do search, add, delete data, allow user to modify username & password
 
-The dropdown menu listed below
+### The dropdown menu listed below
 * 管理委員會: 成員職掌，會議記錄，區權會, 社區行事歷
 * 財務報表: 每月財報，年度簡報
 * 法條規約: 中央法規，社區規約
