@@ -23,6 +23,7 @@ reading Firebase database and authenticate with Email/pasword, and allow admin t
 
 ---
 ### Firebase rules
+```
 rules_version = '2';
 
 service cloud.firestore {
@@ -36,3 +37,4 @@ service cloud.firestore {
     }
   }
 }
+```
