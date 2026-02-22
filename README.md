@@ -21,4 +21,18 @@ reading Firebase database and authenticate with Email/pasword, and allow admin t
 * 聯絡方式 
 * 登入
 
+---
+### Firebase rules
+rules_version = '2';
 
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read: if request.auth != null;
+    } 
+    match /users/{documen=**} {
+      allow write: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';    
+    }
+  }
+}
