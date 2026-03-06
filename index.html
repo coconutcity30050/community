@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新竹市椰城社區</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --color-primary: #3498db;
+            --color-primary-dark: #2980b9;
+            --color-secondary: #34495e;
+            --color-secondary-dark: #2c3e50;
+            --color-success: #27ae60;
+            --color-success-dark: #229954;
+            --color-danger: #e74c3c;
+            --color-danger-dark: #c0392b;
+            --color-text: #2c3e50;
+            --color-text-muted: #7f8c8d;
+            --color-bg: #f5f5f5;
+            --color-white: #ffffff;
+            --color-border: #ddd;
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-md: 0 5px 20px rgba(0,0,0,0.15);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.2);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --transition: all 0.25s ease;
+        }
+        body {
+            font-family: "Microsoft JhengHei", "PingFang TC", "Open Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: var(--color-bg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.88);
+            z-index: -1;
+            backdrop-filter: blur(8px);
+        }
+        header {
+            background: linear-gradient(135deg, var(--color-secondary-dark), var(--color-primary));
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        nav {
+            background: var(--color-secondary);
+            padding: 0 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn {
+            background: var(--color-secondary);
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .dropbtn::after {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid white;
+            transition: transform 0.25s ease;
+        }
+        .dropdown:hover .dropbtn::after, .dropdown:focus-within .dropbtn::after {
+            transform: rotate(180deg);
+        }
+        .dropbtn:hover, .dropbtn:focus {
+            background: var(--color-primary);
+            outline: none;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: var(--color-white);
+            min-width: 220px;
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            animation: dropdownFadeIn 0.2s ease;
+        }
+        @keyframes dropdownFadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dropdown-content a {
+            color: var(--color-text);
+            padding: 12px 18px;
+            text-decoration: none;
+            display: block;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+        .dropdown-content a:hover, .dropdown-content a:focus {
+            background: #ecf0f1;
+            padding-left: 24px;
+            outline: none;
+        }
+        .dropdown:hover .dropdown-content, .dropdown:focus-within .dropdown-content {
+            display: block;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .btn:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+        button:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+        .btn-primary:hover, .btn-primary:focus {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-danger {
+            background: var(--color-danger);
+            color: white;
+        }
+        .btn-danger:hover, .btn-danger:focus {
+            background: var(--color-danger-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        .btn-success {
+            background: var(--color-success);
+            color: white;
+        }
+        .btn-success:hover, .btn-success:focus {
+            background: var(--color-success-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        .content-area {
+            background: var(--color-white);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            min-height: 400px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            animation: modalFadeIn 0.25s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .modal-content {
+            background: white;
+            margin: 8% auto;
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            max-width: 420px;
+            width: 90%;
+            box-shadow: var(--shadow-lg);
+            animation: modalSlideIn 0.3s ease;
+        }
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-text);
+            font-size: 0.9rem;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--color-white);
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+        }
+        .welcome-banner {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+        }
+        .welcome-banner h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+        .welcome-banner p {
+            font-size: 1.15rem;
+            opacity: 0.95;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem 0;
+        }
+        .menu-card {
+            background: var(--color-white);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        .menu-card:hover, .menu-card:focus {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-primary);
+        }
+        .menu-card h3 {
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        .menu-card p {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+        }
+        .admin-panel {
+            display: block;
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+            border: 1px solid #e9ecef;
+        }
+        .admin-panel h3 {
+            margin-bottom: 1rem;
+            color: var(--color-text);
+            font-weight: 600;
+        }
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .search-box input {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: var(--color-white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        th, td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background: var(--color-secondary);
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .markdown-content h1 { font-size: 2rem; margin: 1.5rem 0 1rem; color: var(--color-text); font-weight: 700; }
+        .markdown-content h2 { font-size: 1.5rem; margin: 1.2rem 0 0.8rem; color: var(--color-secondary); font-weight: 600; }
+        .markdown-content h3 { font-size: 1.2rem; margin: 1rem 0 0.5rem; color: var(--color-text-muted); font-weight: 600; }
+        .markdown-content p { margin: 0.8rem 0; line-height: 1.8; }
+        .markdown-content ul, .markdown-content ol { margin: 0.8rem 0; padding-left: 2rem; }
+        .markdown-content li { margin: 0.5rem 0; }
+        .markdown-content table { margin: 1rem 0; }
+        .markdown-content img { max-width: 100%; height: auto; border-radius: var(--radius-md); }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            nav {
+                padding: 0 1rem;
+            }
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .dropdown {
+                width: 100%;
+            }
+            .dropbtn {
+                width: 100%;
+                text-align: left;
+                justify-content: space-between;
+            }
+            .dropdown-content {
+                position: static;
+                width: 100%;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            main {
+                padding: 0 1rem;
+            }
+            .content-area {
+                padding: 1.5rem;
+            }
+            .user-section {
+                width: 100%;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            .welcome-banner {
+                padding: 2.5rem 1.5rem;
+            }
+            .welcome-banner h2 {
+                font-size: 1.8rem;
+            }
+            .modal-content {
+                margin: 15% auto;
+                padding: 1.5rem;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    
+    <header>
+        <div class="header-content">
+            <h1>新竹市椰城社區</h1>
+        </div>
+    </header>
+
+    <nav id="mainNav">
+        <div class="nav-container">
+                <div class="dropdown">
+                <button class="dropbtn">管理委員會</button>
+                <div class="dropdown-content" id="managementMenu"></div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">法條規約</button>
+                <div class="dropdown-content" id="legalMenu"></div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">共用場所</button>
+                <div class="dropdown-content" id="publicMenu"></div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">社區設備</button>
+                <div class="dropdown-content" id="equipmentMenu"></div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">清潔環保</button>
+                <div class="dropdown-content" id="cleaningMenu"></div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn" onclick="loadPage('contact')">聯絡方式</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="content-area" id="mainContent">
+            <div class="welcome-banner">
+                <h2>歡迎來到新竹市椰城社區</h2>
+                <p>請點擊下方選項查看更多資訊</p>
+            </div>
+            <div class="menu-grid" id="menuGrid"></div>
+        </div>
+    </main>
+
+    <script>
+        const converter = new showdown.Converter({
+            tables: true,
+            tasklists: true
+        });
+
+        function convertMarkdownToHtml(markdown) {
+            return converter.makeHtml(markdown);
+        }
+
+        const menuStructure = {
+            management: { title: '管理委員會', items: { 'members': '成員職掌', 'calendar': '社區行事曆' } },
+            legal: { title: '法條規約', items: { 'regulations': '社區規約', 'law': '政府法規' } },
+            public: { title: '共用場所', items: { 'courtyard': '中庭區域', 'guard': '警衛室', 'office': '辦公室', 'reading': '閱覽室', 'parcel': '包裹室' } },
+            equipment: { title: '社區設備', items: { 'mechanical': '機電機房', 'sewage': '污水機房', 'fire': '消防及警報設備'} },
+            cleaning: { title: '清潔環保', items: { 'schedule': '環保局週班表', 'recycle': '垃圾回收須知' } }
+        };
+
+        function init() {
+            loadMenuStructure();
+            showMainPage();
+        }
+
+        function loadMenuStructure() {
+            Object.keys(menuStructure).forEach(key => {
+                const menu = document.getElementById(`${key}Menu`);
+                if (menu) {
+                    const items = menuStructure[key].items;
+                    Object.keys(items).forEach(itemKey => {
+                        const a = document.createElement('a');
+                        a.href = '#';
+                        a.textContent = items[itemKey];
+                        a.onclick = (e) => { e.preventDefault(); loadPage(key, itemKey); };
+                        menu.appendChild(a);
+                    });
+                }
+            });
+        }
+
+        function showMainPage() {
+            const content = document.getElementById('mainContent');
+            
+            let html = `
+                <div class="welcome-banner">
+                    <h2>歡迎來到新竹市椰城社區</h2>
+                    <p>請點擊下方選項查看更多資訊</p>
+                </div>
+                <div class="menu-grid" id="menuGrid">
+            `;
+
+            Object.keys(menuStructure).forEach(key => {
+                const menu = menuStructure[key];
+                const firstItem = Object.keys(menu.items)[0];
+                html += `
+                    <div class="menu-card" onclick="loadPage('${key}', '${firstItem}')">
+                        <h3>${menu.title}</h3>
+                        <p>點擊查看詳細資訊</p>
+                    </div>
+                `;
+            });
+
+            html += `
+                    <div class="menu-card" onclick="loadPage('contact')">
+                        <h3>聯絡方式</h3>
+                        <p>點擊查看聯絡資訊</p>
+                    </div>
+                </div>
+            `;
+
+            content.innerHTML = html;
+        }
+
+        function loadPage(category, item) {
+            event.preventDefault();
+
+            const content = document.getElementById('mainContent');
+            let bgImage = `url('./images/${category || 'default'}.jpg')`;
+            document.body.style.backgroundImage = bgImage;
+
+            let pageTitle = '';
+            let filePath = './content/';
+
+            if (category === 'contact') {
+                pageTitle = '聯絡方式';
+                filePath += 'contact/contact.md';
+            } else if (category && item) {
+                pageTitle = menuStructure[category].items[item];
+                filePath += `${category}/${item}.md`;
+            } else if (category) {
+                const firstItem = Object.keys(menuStructure[category].items)[0];
+                pageTitle = menuStructure[category].items[firstItem];
+                filePath += `${category}/${firstItem}.md`;
+            }
+
+            fetch(filePath)
+                .then(response => {
+                    if (!response.ok) throw new Error('File not found');
+                    return response.text();
+                })
+                .then(markdown => {
+                    const html = convertMarkdownToHtml(markdown);
+                    content.innerHTML = `
+                        <button class="btn btn-primary" onclick="showMainPage()" style="margin-bottom:1rem;">← 返回</button>
+                        <h2 style="margin-bottom:1rem;">${pageTitle}</h2>
+                        <div class="markdown-content">${html}</div>
+                    `;
+                })
+                .catch(() => {
+                    content.innerHTML = `
+                        <button class="btn btn-primary" onclick="showMainPage()" style="margin-bottom:1rem;">← 返回</button>
+                        <h2 style="margin-bottom:1rem;">${pageTitle}</h2>
+                        <p>目前沒有相關內容</p>
+                    `;
+                });
+        }
+
+        init();
+    </script>
+</body>
+</html>
